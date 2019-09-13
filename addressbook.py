@@ -15,13 +15,33 @@ def DelePhoneNumber(raw):
 set_Lv3_sub={"市","区","县"}
 set_Lv4_sub={"街道","镇","乡"}
 ret=[]
+def GetLv7(now_addr):#detail
+    ret[7]=now_addr
+
+def GetLv6(now_addr):#Num
+    # try:
+        print("Lv6" + now_addr)
+        match = re.match(r"(.*[0-9]+号?)", now_addr)
+        if match:
+            print("666"+match.group(0))
+            ret[6] = match.group(0)
+            now_addr = re.sub(r".*[0-9]+号?", "", now_addr)
+        GetLv7(now_addr)
+    # except:
+    #     return
 
 def GetLv5(now_addr):#street
     try:
         print("Lv5" + now_addr)
-        # if(level==1):
-        ret[5] = now_addr
-        return
+        if(level==1):
+            ret[5] = now_addr
+            return
+        else:
+            match=re.match(r".*(路|街|巷|弄)",now_addr)
+            if match:
+                ret[5]=match.group(0)
+                now_addr=re.sub(r".*(路|街|巷|弄)","",now_addr)
+            GetLv6(now_addr)
     except:
         return
 
@@ -65,7 +85,7 @@ def GetLv3(now_addr,now_dict):#country
         print("Lv3" + now_addr)
         if len(now_dict) == 1:
             for i in now_dict:
-                print(now_dict[i])
+                # print(now_dict[i])
                 now_dict = now_dict[i]['c']
                 break
             GetLv4(now_addr, now_dict)
