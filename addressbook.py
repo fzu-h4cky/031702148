@@ -15,11 +15,12 @@ def DelePhoneNumber(raw):
 set_Lv3_sub={"市","区","县"}
 set_Lv4_sub={"街道","镇","乡"}
 ret=[]
+
 def GetLv5(now_addr):#street
     print("Lv5" + now_addr)
-    if(level==1):
-        ret[5]=now_addr
-        return
+    # if(level==1):
+    ret[5]=now_addr
+    return
 
 def GetLv4(now_addr,now_dict):#street
     print("Lv4" + now_addr)
@@ -170,7 +171,7 @@ def Split5(raw):
     ret=[]
     print(raw)
     GetLv1(raw,json_list)
-    return ret
+    return PhoneNumber
 
 
 
@@ -180,6 +181,7 @@ json_list= json.loads(data)
 input_info=open('1.txt',"r").read()
 info_list=input_info.split()
 # print(info_list)
+output_list=[]
 for info in info_list:
     ret.clear()
     for i in range(10):
@@ -190,7 +192,25 @@ for info in info_list:
     addr=tmp.split(",")[1]
     addr = addr.replace(".", "")
     print(name+","+addr)
+    PhoneNumber  = Split5(addr)
+    print(ret)
+    tmp_address_list=[]
+    tmp_address_list.clear()
     if level==1:
-        res_list=Split5(addr)
-        print(ret)
+        for i in range(5):
+            tmp_address_list.append(ret[i+1])
+    else:
+        for i in range(7):
+            tmp_address_list.append(ret[i+1])
+    tmp_output_info={}
+    tmp_output_info.clear()
+    tmp_output_info["姓名"]=name
+    tmp_output_info["手机"]=PhoneNumber
+    tmp_output_info["地址"]=tmp_address_list
+    output_list.append(tmp_output_info)
+output_json=json.dumps(output_list,indent=4)
+output_json=output_json.encode('utf-8').decode('unicode_escape')
+output_file=open("2.txt","w")
+output_file.write(output_json)
+
 
