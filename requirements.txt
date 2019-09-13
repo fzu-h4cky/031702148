@@ -1,3 +1,4 @@
-jsonpath==0.82
+jsonpath
 json
-system==0.1.16
+system
+re
