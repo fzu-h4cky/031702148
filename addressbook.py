@@ -12,18 +12,60 @@ def GetPhoneNumber(raw):
 
 def DelePhoneNumber(raw):
     return re.sub(r"[0-9]{11}","",raw)
-
+set_Lv3_sub={"市","区","县"}
 ret=[]
-
-def GetLv1(now_addr,now_dict):#province
-    for prov_dict in now_dict:
-        now_path=json_list[prov_dict]
-        try_pronvince = now_path['n']
-        # print(try_province)
-        lst = 0
+def GetLv3(now_addr,now_dict):#country
+    print("Lv3" + now_addr)
+    for country_dict in now_dict:
+        now_path=now_dict[country_dict]
+        try_country = now_path['n']
         p = 0
         while p < len(now_addr):
-            if (addr[lst:p].find(try_pronvince) >= 0):
+            # print(addr[lst:p])
+            if (now_addr[0:p].find(try_country) >= 0):
+                country = try_country
+                
+                # print(now_addr[p])
+                print(country)
+
+                # GetLv3(now_addr[p:],now_path['c'])
+                break
+            p = p + 1
+
+
+    return
+def GetLv2(now_addr,now_dict):#city
+    print("Lv2"+now_addr)
+    for city_dict in now_dict:
+        now_path=now_dict[city_dict]
+        try_city = now_path['n']
+        p = -1
+        while p < len(now_addr):
+            p = p + 1
+            if (now_addr[0:p].find(try_city) >= 0):
+                city = try_city
+                city=city+"市"
+                ret.append(city)
+                print(city)
+                GetLv3(now_addr[p:],now_path['c'])
+                break
+
+
+
+    return
+
+def GetLv1(now_addr,now_dict):#province
+    print("Lv1" + now_addr)
+    for prov_dict in now_dict:
+        now_path=now_dict[prov_dict]
+        try_pronvince = now_path['n']
+        # print(try_pronvince)
+
+        p =-1
+        while p < len(now_addr):
+            p = p + 1
+            # print(addr[lst:p])
+            if (now_addr[0:p].find(try_pronvince) >= 0):
                 province=try_pronvince
 
                 if province not in direct_city:#不是直辖市
@@ -36,16 +78,26 @@ def GetLv1(now_addr,now_dict):#province
                             break
                     if flag==False:
                         province+="省"
-                print(province)
-                ret.append(province)
+
+
+                    ret.append(province)
+                    print(province)
+                    GetLv2(now_addr[p:], now_path['c'])
+                else:
+                    ret.append(province)#省=直辖
+                    ret.append(province+"市")#市=直辖市
+                    print(province+"市")
+                    GetLv3(now_addr[p:], now_path['c'])
+
                 break
-            p = p + 1
+
+    return
 
 def Split5(raw):
     PhoneNumber=GetPhoneNumber(raw)
     raw=DelePhoneNumber(raw)#dele phone
     ret=[]
-    # print(raw)
+    print(raw)
     GetLv1(raw,json_list)
     return ret
 
@@ -63,7 +115,7 @@ for info in info_list:
     name=tmp.split(",")[0]
     addr=tmp.split(",")[1]
     addr = addr.replace(".", "")
-    # print(name+","+addr)
+    print(name+","+addr)
     if level==1:
         res_list=Split5(addr)
 
