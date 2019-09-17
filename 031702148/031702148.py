@@ -242,15 +242,15 @@ for info in info_list:
         tmp_output_info["姓名"] = name
         tmp_output_info["手机"] = PhoneNumber
         tmp_output_info["地址"] = tmp_address_list
-        output_list.append(tmp_output_info)
+        print(tmp_output_info)
     except:
         continue
-try:
-    output_json = json.dumps(output_list, indent=4)
-    output_json = output_json.encode('utf-8').decode('unicode_escape')
-    print(output_json)
-    # output_file = open("2.txt", "w",encoding="utf-8")
-    # output_file.write(output_json)
-except:
-    pass
+# try:
+#     output_json = json.dumps(output_list, indent=4)
+#     output_json = output_json.encode('utf-8').decode('unicode_escape')
+#     print(output_json)
+#     # output_file = open("2.txt", "w",encoding="utf-8")
+#     # output_file.write(output_json)
+# except:
+#     pass
 
