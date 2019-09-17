@@ -208,7 +208,7 @@ def Split5(raw):
     except:
         return "error"
 
-json_file = open(r'031702148.json', 'rb')
+json_file = open(r'031702148/031702148.json', 'rb')
 data = json_file.read()
 json_list = json.loads(data)
 # input_info=open(r'1.txt', 'r').read()
