@@ -210,7 +210,11 @@ def Split5(raw):
 
 if __name__ == '__main__':
     try:
+<<<<<<< HEAD
         json_file = open(r'031702148\db.json', 'rb')
+=======
+        json_file = open(r'db.json', 'rb')
+>>>>>>> 1390cce9101747e0c2ecb407b5af0ab86a58e86a
         data = json_file.read()
         json_list = json.loads(data)
         input_info =input()
