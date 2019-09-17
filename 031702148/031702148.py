@@ -208,7 +208,7 @@ def Split5(raw):
     except:
         return "error"
 
-json_file = open(r'db.json', 'rb')
+json_file = open(r'031702148.json', 'rb')
 data = json_file.read()
 json_list = json.loads(data)
 # input_info=open(r'1.txt', 'r').read()
@@ -249,7 +249,7 @@ try:
     output_json = json.dumps(output_list, indent=4)
     output_json = output_json.encode('utf-8').decode('unicode_escape')
     print(output_json)
-    # output_file = open("2.txt", "w")
+    # output_file = open("2.txt", "w",encoding="utf-8")
     # output_file.write(output_json)
 except:
     pass
