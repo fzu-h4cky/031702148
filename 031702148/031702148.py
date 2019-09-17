@@ -208,50 +208,49 @@ def Split5(raw):
     except:
         return "error"
 
-if __name__ == '__main__':
-    json_file = open(r'db.json', 'rb')
-    data = json_file.read()
-    json_list = json.loads(data)
-    input_info =input()
-    info_list = input_info.split()
-    output_list = []
+json_file = open(r'db.json', 'rb')
+data = json_file.read()
+json_list = json.loads(data)
+# input_info=open(r'1.txt', 'r').read()
+input_info =input()
+info_list = input_info.split()
+output_list = []
 
-    for info in info_list:
-        try:
-            ret.clear()
-            for i in range(10):
-                ret.append("")
-            level = int(info[0])
-            tmp = info[2:]
-            name = tmp.split(",")[0]
-            addr = tmp.split(",")[1]
-            addr = addr.replace(".", "")
-            #print(name + "," + addr)
-            PhoneNumber = Split5(addr)
-            #print(ret)
-            tmp_address_list = []
-            tmp_address_list.clear()
-            if level == 1:
-                for i in range(5):
-                    tmp_address_list.append(ret[i + 1])
-            else:
-                for i in range(7):
-                    tmp_address_list.append(ret[i + 1])
-            tmp_output_info = {}
-            tmp_output_info.clear()
-            tmp_output_info["姓名"] = name
-            tmp_output_info["手机"] = PhoneNumber
-            tmp_output_info["地址"] = tmp_address_list
-            output_list.append(tmp_output_info)
-        except:
-            continue
+for info in info_list:
     try:
-        output_json = json.dumps(output_list, indent=4)
-        output_json = output_json.encode('utf-8').decode('unicode_escape')
-        print(output_json)
-        # output_file = open("2.txt", "w")
-        # output_file.write(output_json)
+        ret.clear()
+        for i in range(10):
+            ret.append("")
+        level = int(info[0])
+        tmp = info[2:]
+        name = tmp.split(",")[0]
+        addr = tmp.split(",")[1]
+        addr = addr.replace(".", "")
+        #print(name + "," + addr)
+        PhoneNumber = Split5(addr)
+        #print(ret)
+        tmp_address_list = []
+        tmp_address_list.clear()
+        if level == 1:
+            for i in range(5):
+                tmp_address_list.append(ret[i + 1])
+        else:
+            for i in range(7):
+                tmp_address_list.append(ret[i + 1])
+        tmp_output_info = {}
+        tmp_output_info.clear()
+        tmp_output_info["姓名"] = name
+        tmp_output_info["手机"] = PhoneNumber
+        tmp_output_info["地址"] = tmp_address_list
+        output_list.append(tmp_output_info)
     except:
-        pass
-
+        continue
+try:
+    output_json = json.dumps(output_list, indent=4)
+    output_json = output_json.encode('utf-8').decode('unicode_escape')
+    print(output_json)
+    # output_file = open("2.txt", "w")
+    # output_file.write(output_json)
+except:
+    pass
 
