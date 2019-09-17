@@ -209,16 +209,13 @@ def Split5(raw):
         return "error"
 
 if __name__ == '__main__':
-    try:
-        json_file = open(r'db.json', 'rb')
-        data = json_file.read()
-        json_list = json.loads(data)
-        input_info =input()
-        info_list = input_info.split()
-        # #print(info_list)
-        output_list = []
-    except:
-        pass
+    json_file = open(r'db.json', 'rb')
+    data = json_file.read()
+    json_list = json.loads(data)
+    input_info =input()
+    info_list = input_info.split()
+    output_list = []
+
     for info in info_list:
         try:
             ret.clear()
