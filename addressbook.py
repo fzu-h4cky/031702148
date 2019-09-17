@@ -20,10 +20,10 @@ def GetLv7(now_addr):#detail
 
 def GetLv6(now_addr):#Num
     # try:
-        print("Lv6" + now_addr)
+    #     #print("Lv6" + now_addr)
         match = re.match(r"(.*[0-9]+号?)", now_addr)
         if match:
-            print("666"+match.group(0))
+            #print("666"+match.group(0))
             ret[6] = match.group(0)
             now_addr = re.sub(r".*[0-9]+号?", "", now_addr)
         GetLv7(now_addr)
@@ -32,7 +32,7 @@ def GetLv6(now_addr):#Num
 
 def GetLv5(now_addr):#street
     try:
-        print("Lv5" + now_addr)
+        # #print("Lv5" + now_addr)
         if(level==1):
             ret[5] = now_addr
             return
@@ -47,10 +47,10 @@ def GetLv5(now_addr):#street
 
 def GetLv4(now_addr,now_dict):#street
     try:
-        print("Lv4" + now_addr)
+        # #print("Lv4" + now_addr)
         if len(now_dict) == 1:
             for i in now_dict:
-                print(now_dict[i])
+                # #print(now_dict[i])
                 now_dict = now_dict[i]['c']
                 break
             GetLv5(now_addr, now_dict)
@@ -61,17 +61,17 @@ def GetLv4(now_addr,now_dict):#street
             p = -1
             while p < len(now_addr):
                 p = p + 1
-                # print(addr[lst:p])
+                # #print(addr[lst:p])
                 if (now_addr[0:p].find(try_street) >= 0):
                     street = try_street
-                    print("!!!" + now_addr[p:p + 2])
+                    #print("!!!" + now_addr[p:p + 2])
                     if now_addr[p] in set_Lv4_sub:
                         street = street + now_addr[p]
                         p += 1
                     if now_addr[p:p + 2] in set_Lv4_sub:
                         street = street + now_addr[p:p + 2]
                         p += 2
-                    print(street)
+                    #print(street)
                     ret[4] = street
                     GetLv5(now_addr[p:])
                     return
@@ -82,10 +82,10 @@ def GetLv4(now_addr,now_dict):#street
 
 def GetLv3(now_addr,now_dict):#country
     try:
-        print("Lv3" + now_addr)
+        #print("Lv3" + now_addr)
         if len(now_dict) == 1:
             for i in now_dict:
-                # print(now_dict[i])
+                # #print(now_dict[i])
                 now_dict = now_dict[i]['c']
                 break
             GetLv4(now_addr, now_dict)
@@ -97,15 +97,15 @@ def GetLv3(now_addr,now_dict):#country
             p = -1
             while p < len(now_addr):
                 p = p + 1
-                # print(addr[lst:p])
+                # #print(addr[lst:p])
                 if (now_addr[0:p].find(try_country) >= 0):
                     country = try_country
 
-                    # print("!!!"+now_addr[p])
+                    # #print("!!!"+now_addr[p])
                     if now_addr[p] in set_Lv3_sub:
                         country = country + now_addr[p]
                         p += 1
-                    print(country)
+                    #print(country)
                     ret[3] = country
                     GetLv4(now_addr[p:], now_path['c'])
                     return
@@ -118,12 +118,12 @@ def GetLv2(now_addr,now_dict):#city
     try:
         if len(now_dict) == 1:
             for i in now_dict:
-                print(now_dict[i])
+                #print(now_dict[i])
                 now_dict = now_dict[i]['c']
                 break
             GetLv3(now_addr, now_dict)
             return
-        print("Lv2" + now_addr)
+        #print("Lv2" + now_addr)
         for city_dict in now_dict:
             now_path = now_dict[city_dict]
             try_city = now_path['n']
@@ -134,7 +134,7 @@ def GetLv2(now_addr,now_dict):#city
                     city = try_city
                     city = city + "市"
                     ret[2] = (city)
-                    print(city)
+                    #print(city)
                     GetLv3(now_addr[p:], now_path['c'])
                     return
 
@@ -145,10 +145,10 @@ def GetLv2(now_addr,now_dict):#city
 
 def GetLv1(now_addr,now_dict):#province
     try:
-        print("Lv1" + now_addr)
+        #print("Lv1" + now_addr)
         if len(now_dict) == 1:
             for i in now_dict:
-                print(now_dict[i])
+                #print(now_dict[i])
                 now_dict = now_dict[i]['c']
                 break
             GetLv1(now_addr, now_dict)
@@ -157,19 +157,19 @@ def GetLv1(now_addr,now_dict):#province
         for prov_dict in now_dict:
             now_path = now_dict[prov_dict]
             try_pronvince = now_path['n']
-            # print(try_pronvince)
+            # #print(try_pronvince)
 
             p = -1
             while p < len(now_addr):
                 p = p + 1
-                # print(addr[lst:p])
+                # #print(addr[lst:p])
                 if (now_addr[0:p].find(try_pronvince) >= 0):
                     province = try_pronvince
 
                     if province not in direct_city:  # 不是直辖市
                         flag = False
                         for s_name, f_name in region_dict.items():
-                            # print(s_name + "," + f_name)
+                            # #print(s_name + "," + f_name)
                             if (province == s_name):
                                 province = f_name
                                 flag = True
@@ -178,17 +178,17 @@ def GetLv1(now_addr,now_dict):#province
                             province += "省"
 
                         ret[1] = (province)
-                        print(province)
+                        #print(province)
                         GetLv2(now_addr[p:], now_path['c'])
                     else:
                         ret[1] = (province)
                         ret[2] = (province + "市")  # 市=直辖市
-                        print(province)
+                        #print(province)
                         GetLv2(now_addr[p:], now_path['c'])
 
                         # ret[1]=(province)#省=直辖
                         # ret[2]=(province+"市")#市=直辖市
-                        # print(province+"市")
+                        # #print(province+"市")
                         # GetLv3(now_addr[p:], now_path['c'])
 
                     return
@@ -202,7 +202,7 @@ def Split5(raw):
         PhoneNumber = GetPhoneNumber(raw)
         raw = DelePhoneNumber(raw)  # dele phone
         ret = []
-        print(raw)
+        #print(raw)
         GetLv1(raw, json_list)
         return PhoneNumber
     except:
@@ -210,12 +210,11 @@ def Split5(raw):
 
 if __name__ == '__main__':
     try:
-        json_file = open(r'..\lv4.json', 'rb')
-        data = json_file.read()
+        data = input()
         json_list = json.loads(data)
         input_info = open('1.txt', "r").read()
         info_list = input_info.split()
-        # print(info_list)
+        # #print(info_list)
         output_list = []
     except:
         pass
@@ -229,9 +228,9 @@ if __name__ == '__main__':
             name = tmp.split(",")[0]
             addr = tmp.split(",")[1]
             addr = addr.replace(".", "")
-            print(name + "," + addr)
+            # #print(name + "," + addr)
             PhoneNumber = Split5(addr)
-            print(ret)
+            # #print(ret)
             tmp_address_list = []
             tmp_address_list.clear()
             if level == 1:
@@ -251,8 +250,9 @@ if __name__ == '__main__':
     try:
         output_json = json.dumps(output_list, indent=4)
         output_json = output_json.encode('utf-8').decode('unicode_escape')
-        output_file = open("2.txt", "w")
-        output_file.write(output_json)
+        print(output_json)
+        # output_file = open("2.txt", "w")
+        # output_file.write(output_json)
     except:
         pass
 
