@@ -242,7 +242,9 @@ for info in info_list:
         tmp_output_info["姓名"] = name
         tmp_output_info["手机"] = PhoneNumber
         tmp_output_info["地址"] = tmp_address_list
-        print(tmp_output_info)
+        output_json = json.dumps(tmp_output_info,indent=4)
+        output_json = output_json.encode('utf-8').decode('unicode_escape')
+        print(output_json)
     except:
         continue
 # try:
