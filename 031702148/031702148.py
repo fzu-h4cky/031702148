@@ -1,5 +1,4 @@
 import json
-import jsonpath
 import re
 direct_city={"北京","天津","上海","重庆"}
 region_dict={"内蒙古":"内蒙古自治区","广西":"广西壮族自治区","宁夏":"宁夏回族自治区","新疆":"新疆维吾尔自治区","西藏":"西藏自治区"}
